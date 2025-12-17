@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет по отклонениям</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Система контроля качества</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" th:href="@{/technologist/reports}">Назад</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Отчет по отклонениям от норм</h1>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Период</h5>
+            </div>
+            <div class="card-body">
+                <p th:if="${report != null and report.period != null}">
+                    <strong>Период:</strong> 
+                    <span th:text="${#temporals.format(report.period.start, 'dd.MM.yyyy')}"></span> - 
+                    <span th:text="${#temporals.format(report.period.end, 'dd.MM.yyyy')}"></span>
+                </p>
+                <p><strong>Всего отклонений:</strong> 
+                    <span th:text="${report != null ? report.totalDeviations : 0}"></span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="card mt-4" th:if="${report != null and report.deviations != null}">
+            <div class="card-header">
+                <h5>Список отклонений</h5>
+            </div>
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(report.deviations)}">
+                    <p class="text-muted">Отклонений не обнаружено</p>
+                </div>
+                <table class="table" th:if="${!#lists.isEmpty(report.deviations)}">
+                    <thead>
+                        <tr>
+                            <th>ID анализа</th>
+                            <th>Партия</th>
+                            <th>Этап</th>
+                            <th>pH</th>
+                            <th>Плотность</th>
+                            <th>Алкоголь %</th>
+                            <th>Соответствие нормам</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="analysis : ${report.deviations}">
+                            <td th:text="${analysis.analysisId}"></td>
+                            <td th:text="${analysis.sample.batch.batchNumber}"></td>
+                            <td th:text="${analysis.sample.stage.stageName}"></td>
+                            <td th:text="${analysis.pH != null ? #numbers.formatDecimal(analysis.pH, 1, 2) : '-'}"></td>
+                            <td th:text="${analysis.density != null ? #numbers.formatDecimal(analysis.density, 1, 3) : '-'}"></td>
+                            <td th:text="${analysis.alcoholContent != null ? #numbers.formatDecimal(analysis.alcoholContent, 1, 2) : '-'}"></td>
+                            <td>
+                                <span class="badge bg-danger" th:if="${!analysis.withinNorms}">Вне норм</span>
+                                <span class="badge bg-success" th:if="${analysis.withinNorms}">В норме</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
