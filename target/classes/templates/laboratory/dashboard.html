@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель лаборанта</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Система контроля качества</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" th:href="@{/logout}">Выход</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Панель лаборанта</h1>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Быстрые действия</h5>
+                    </div>
+                    <div class="card-body">
+                        <a th:href="@{/laboratory/samples/register}" class="btn btn-primary mb-2 w-100">
+                            Зарегистрировать пробу
+                        </a>
+                        <a th:href="@{/laboratory/samples}" class="btn btn-secondary w-100">
+                            Просмотр проб
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Статистика</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Всего проб: <span th:text="${#lists.size(samples)}">0</span></p>
+                        <p>Всего партий: <span th:text="${#lists.size(batches)}">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Последние пробы</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Партия</th>
+                                    <th>Этап</th>
+                                    <th>Дата</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="sample : ${samples}">
+                                    <td th:text="${sample.sampleId}"></td>
+                                    <td th:text="${sample.batch.batchNumber}"></td>
+                                    <td th:text="${sample.stage.stageName}"></td>
+                                    <td th:text="${#temporals.format(sample.samplingDate, 'dd.MM.yyyy HH:mm')}"></td>
+                                    <td th:text="${sample.status}"></td>
+                                    <td>
+                                        <a th:href="@{/laboratory/samples/{id}/analyze(id=${sample.sampleId})}" 
+                                           class="btn btn-sm btn-primary">Провести анализ</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

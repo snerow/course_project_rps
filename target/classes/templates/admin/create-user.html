@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание пользователя</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Система контроля качества</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" th:href="@{/admin/users}">Назад</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Создание пользователя</h1>
+        
+        <form th:action="@{/admin/users/create}" method="post" class="mt-4">
+            <div class="mb-3">
+                <label for="username" class="form-label">Имя пользователя</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Полное имя</label>
+                <input type="text" class="form-control" id="fullName" name="fullName" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="roleName" class="form-label">Роль</label>
+                <select class="form-select" id="roleName" name="roleName" required>
+                    <option value="ADMIN">Администратор</option>
+                    <option value="LABORATORY_ASSISTANT">Лаборант</option>
+                    <option value="TECHNOLOGIST">Технолог</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Создать</button>
+            <a th:href="@{/admin/users}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>
+
