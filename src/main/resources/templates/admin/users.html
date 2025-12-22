@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление пользователями</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Система контроля качества</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" th:href="@{/admin/dashboard}">Назад</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Управление пользователями</h1>
+            <a th:href="@{/admin/users/create}" class="btn btn-primary">Создать пользователя</a>
+        </div>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя пользователя</th>
+                    <th>Полное имя</th>
+                    <th>Роль</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.userId}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.fullName}"></td>
+                    <td th:text="${user.role.name}"></td>
+                    <td>
+                        <span class="badge" 
+                              th:classappend="${user.enabled ? 'bg-success' : 'bg-danger'}"
+                              th:text="${user.enabled ? 'Активен' : 'Отключен'}">
+                        </span>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/users/{id}/edit(id=${user.userId})}" 
+                           class="btn btn-sm btn-primary">Редактировать</a>
+                        <form th:action="@{/admin/users/{id}/delete(id=${user.userId})}" 
+                              method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" 
+                                    onclick="return confirm('Вы уверены?')">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

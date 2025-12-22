@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр проб</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Система контроля качества</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" th:href="@{/laboratory/dashboard}">Назад</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Просмотр проб</h1>
+            <a th:href="@{/laboratory/samples/register}" class="btn btn-primary">Зарегистрировать пробу</a>
+        </div>
+        
+        <div th:if="${success}" class="alert alert-success" role="alert">
+            Результаты анализа успешно сохранены
+        </div>
+        <div th:if="${warning}" class="alert alert-warning" role="alert">
+            Обнаружены отклонения от норм. Создано предупреждение.
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Партия</th>
+                            <th>Этап</th>
+                            <th>Дата отбора</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="sample : ${samples}">
+                            <td th:text="${sample.sampleId}"></td>
+                            <td th:text="${sample.batch.batchNumber}"></td>
+                            <td th:text="${sample.stage.stageName}"></td>
+                            <td th:text="${#temporals.format(sample.samplingDate, 'dd.MM.yyyy HH:mm')}"></td>
+                            <td>
+                                <span class="badge" 
+                                      th:classappend="${sample.status == 'REGISTERED' ? 'bg-info' : 
+                                                     sample.status == 'IN_PROCESSING' ? 'bg-warning' : 
+                                                     sample.status == 'COMPLETED' ? 'bg-success' : 'bg-secondary'}"
+                                      th:text="${sample.status}">
+                                </span>
+                            </td>
+                            <td>
+                                <a th:href="@{/laboratory/samples/{id}/analyze(id=${sample.sampleId})}" 
+                                   class="btn btn-sm btn-primary">Провести анализ</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
