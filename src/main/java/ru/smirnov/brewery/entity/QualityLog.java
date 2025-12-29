@@ -42,9 +42,5 @@ public class QualityLog {
             operationDate = LocalDateTime.now();
         }
     }
-    
-    public void getLogsByBatch() {
-        // Метод для получения логов по партии
-    }
 }
 

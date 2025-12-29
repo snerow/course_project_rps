@@ -3,7 +3,7 @@
 --
 -- ВАЖНО: База данных должна быть создана с кодировкой UTF-8
 -- Выполните перед запуском скрипта:
--- CREATE DATABASE qualitydb WITH ENCODING 'UTF8' LC_COLLATE='ru_RU.UTF-8' LC_CTYPE='ru_RU.UTF-8' TEMPLATE template0;
+CREATE DATABASE qualitydb WITH ENCODING 'UTF8' LC_COLLATE='ru_RU.UTF-8' LC_CTYPE='ru_RU.UTF-8' TEMPLATE template0;
 
 -- Таблица ролей пользователей
 CREATE TABLE IF NOT EXISTS roles (

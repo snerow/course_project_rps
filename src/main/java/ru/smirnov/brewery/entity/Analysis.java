@@ -49,9 +49,8 @@ public class Analysis {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
-    
+
     public void validateParameters() {
-        // Метод для валидации параметров
     }
     
     public void checkStandards() {

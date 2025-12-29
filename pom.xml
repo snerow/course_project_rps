@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>proj123</artifactId>
+    <artifactId>course_project_rps</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -86,11 +86,6 @@
             <version>4.13.0</version>
         </dependency>
         <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4-master</artifactId>
-            <version>4.13.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-websocket</artifactId>
             <version>10.1.44</version>
@@ -114,6 +109,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.5.5</version>
+                <configuration>
+                    <mainClass>ru.smirnov.brewery.BreweryQualityControlApplication</mainClass>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

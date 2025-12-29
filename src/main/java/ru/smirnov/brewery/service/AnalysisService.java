@@ -131,7 +131,7 @@ public class AnalysisService {
             }
         }
     }
-    
+
     public void validateParameters(Analysis analysis) {
         analysis.validateParameters();
     }
